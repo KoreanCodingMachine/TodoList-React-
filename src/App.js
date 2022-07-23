@@ -1,24 +1,56 @@
-import logo from './logo.svg';
+import TodoList from './pages/TodoList';
+import { useState, useCallback, useRef } from 'react';
 import './App.css';
 
 function App() {
+  const [todos, setTodos] = useState([
+    { title: '1', content: '뭐해', checked: false, id: 1 },
+    { title: '2', content: '뭐해', checked: false, id: 2 },
+    { title: '3', content: '뭐해', checked: true, id: 3 },
+  ]);
+
+  const nextId = useRef(4);
+
+  const onInsert = useCallback(
+    (title, content) => {
+      const new_todos = {
+        title: title,
+        content: content,
+        checked: false,
+        id: nextId,
+      };
+      setTodos(todos.concat(new_todos));
+      nextId.current += 1;
+    },
+    [todos]
+  );
+
+  const onDelete = useCallback(
+    (id) => {
+      setTodos(todos.filter((item) => item.id !== id));
+    },
+    [todos]
+  );
+
+  const onToggle = useCallback(
+    (id) => {
+      setTodos(
+        todos.map((item) =>
+          item.id === id ? { ...item, checked: !item.checked } : item
+        )
+      );
+    },
+    [todos]
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <TodoList
+        todos={todos}
+        onInsert={onInsert}
+        onDelte={onDelete}
+        onToggle={onToggle}
+      />
+    </>
   );
 }
 
