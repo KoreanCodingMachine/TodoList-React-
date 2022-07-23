@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './style.css';
 
-const Todo = ({ item }) => {
-  console.log(item);
+const Todo = ({ item, onRemove, onToggle }) => {
+  const { title, content, checked, id } = item || {};
   return (
     <div className='cards'>
-      <h1>{}</h1>
-      <p>리액트 기초를 공부해봅시다.</p>
-      <button>시작하기</button>
-      <button>완료</button>
+      <h1>{title}</h1>
+      <p>{content}</p>
+      <button
+        onClick={() => {
+          onRemove(id);
+        }}
+      >
+        삭제하기
+      </button>
+      {checked === false ? (
+        <button
+          onClick={() => {
+            onToggle(id);
+          }}
+        >
+          완료
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            onToggle(id);
+          }}
+        >
+          취소
+        </button>
+      )}
     </div>
   );
 };

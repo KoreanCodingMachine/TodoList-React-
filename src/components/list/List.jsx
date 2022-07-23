@@ -2,7 +2,9 @@ import React from 'react';
 import Todo from '../todo/Todo';
 import './style.css';
 
-const List = ({ todos, onDelete, onToggle }) => {
+const List = ({ todos, onRemove, onToggle }) => {
+  console.log(todos);
+  const { title, content, checked, id } = todos;
   return (
     <>
       <div className='working-tree'>
@@ -11,9 +13,16 @@ const List = ({ todos, onDelete, onToggle }) => {
           <span>🐱‍🏍</span>
         </div>
         <div className='container'>
-          {todos.map((item, index) => (
-            <Todo item={item} key={index} />
-          ))}
+          {!checked
+            ? todos.map((item) => (
+                <Todo
+                  item={item}
+                  key={item.id}
+                  onRemove={onRemove}
+                  onToggle={onToggle}
+                />
+              ))
+            : null}
         </div>
       </div>
       <div className='done-tree'>
@@ -22,9 +31,16 @@ const List = ({ todos, onDelete, onToggle }) => {
           <span>👍</span>
         </div>
         <div className='container'>
-          <Todo />
-          <Todo />
-          <Todo />
+          {!checked
+            ? null
+            : todos.map((item) => (
+                <Todo
+                  item={item}
+                  key={item.id}
+                  onRemove={onRemove}
+                  onToggle={onToggle}
+                />
+              ))}
         </div>
       </div>
     </>

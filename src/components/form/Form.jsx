@@ -23,7 +23,7 @@ const Form = ({ onInsert }) => {
     [onInsert, title, content]
   );
   return (
-    <form className='form'>
+    <form className='form' onSubmit={onSubmit}>
       <div className='input-parent'>
         <label className='title' htmlFor='title'>
           제목

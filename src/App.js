@@ -25,9 +25,9 @@ function App() {
     [todos]
   );
 
-  const onDelete = useCallback(
+  const onRemove = useCallback(
     (id) => {
-      setTodos(todos.filter((item) => item.id !== id));
+      setTodos(todos.filter((todo) => todo.id !== id));
     },
     [todos]
   );
@@ -47,7 +47,7 @@ function App() {
       <TodoList
         todos={todos}
         onInsert={onInsert}
-        onDelte={onDelete}
+        onRemove={onRemove}
         onToggle={onToggle}
       />
     </>
