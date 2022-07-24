@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Todo from '../todo/Todo';
 import './style.css';
 
 const List = ({ todos, onRemove, onToggle }) => {
   console.log(todos);
   const { title, content, checked, id } = todos;
+
   return (
     <>
       <div className='working-tree'>
@@ -13,16 +14,15 @@ const List = ({ todos, onRemove, onToggle }) => {
           <span>🐱‍🏍</span>
         </div>
         <div className='container'>
-          {!checked
-            ? todos.map((item) => (
-                <Todo
-                  item={item}
-                  key={item.id}
-                  onRemove={onRemove}
-                  onToggle={onToggle}
-                />
-              ))
-            : null}
+          {todos.map((item) => {
+            if (item.checked === false) {
+              return (
+                <Todo item={item} onToggle={onToggle} onRemove={onRemove} />
+              );
+            } else {
+              return null;
+            }
+          })}
         </div>
       </div>
       <div className='done-tree'>
@@ -31,16 +31,15 @@ const List = ({ todos, onRemove, onToggle }) => {
           <span>👍</span>
         </div>
         <div className='container'>
-          {!checked
-            ? null
-            : todos.map((item) => (
-                <Todo
-                  item={item}
-                  key={item.id}
-                  onRemove={onRemove}
-                  onToggle={onToggle}
-                />
-              ))}
+          {todos.map((item) => {
+            if (item.checked === true) {
+              return (
+                <Todo item={item} onToggle={onToggle} onRemove={onRemove} />
+              );
+            } else {
+              return null;
+            }
+          })}
         </div>
       </div>
     </>
